@@ -25,10 +25,7 @@ class shoppingCart{
     productTotal(){
         return this.products.reduce((total, product )=> total + product.price,0);
     }
-    cart(){
-        return this.products;
-       
-    }
+
 }
 
 
@@ -44,6 +41,5 @@ cart.addproduct(product2);
 console.log('----------------')
 console.log("Total price:",cart.productTotal())
 console.log(`Removing the product ${cart.removeProduct("shoe")}:`,cart.productTotal());
- console.log("name",cart.cart())
 
 
