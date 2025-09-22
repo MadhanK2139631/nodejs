@@ -42,4 +42,3 @@ console.log('----------------')
 console.log("Total price:",cart.productTotal())
 console.log(`Removing the product ${cart.removeProduct("shoe")}:`,cart.productTotal());
 
-
