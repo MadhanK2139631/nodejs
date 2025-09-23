@@ -1,22 +1,23 @@
+const { createRecordValidator } = require("../utils/validation.js");
+
 module.exports = app => {
-  const tutorials = require("../controllers/tutorial.controllers.js");
+    const tutorials = require("../controllers/tutorial.controllers.js");
 
-  var router = require("express").Router();
+    const router = require("express").Router();
 
-  router.post("/", tutorials.create);
+    router.post("/", createRecordValidator, tutorials.create);
 
-  router.get("/", tutorials.findAll);
+    router.get("/", tutorials.findAll);
 
-  router.get("/published", tutorials.findAllPublished);
+    router.get("/published", tutorials.findAllPublished);
 
-  router.get("/:id", tutorials.findOne);
+    router.get("/:id", tutorials.findOne);
 
-  router.put("/:id", tutorials.update);
+    router.put("/:id", tutorials.update);
 
-  router.delete("/:id", tutorials.delete);
+    router.delete("/:id", tutorials.delete);
 
+    router.delete("/", tutorials.deleteAll);
 
-  router.delete("/", tutorials.deleteAll);
-
-  app.use("/api/tutorials", router);
-};
+    app.use("/api/tutorials", router);
+}

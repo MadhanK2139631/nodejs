@@ -1,16 +1,22 @@
 const db = require("../models");
-const {checkDuplicateTitlle}=require('../utils/validation');
+// const { checkDuplicateTitlle } = require('../utils/validation');
 const Tutorial = db.tutorials;
+const {validationResult} = require("express-validator");
 
 exports.create = async (req, res) => {
-    try {
-        if (!req.body.title) {
-            res.status(400).send({ message: "Content cannot be empty" });
-            return;
-        }
-        const isDuplicateTitle = await ch(req.body.title);
+  try {
+    // if (!req.body.title.trim()) {
+    //   res.status(400).send({ message: "Content cannot be empty" });
+    //   return;
+    // }
+    // if (!req.body.description.trim()) {
+    //   res.status(400).send({ message: "Content cannot be empty" });
+    //   return;
+    // }
+    // const isDuplicateTitle = await checkDuplicateTitlle(req.body.title);
+        const result = validationResult(req);
 
-        if (!isDuplicateTitle?.length) {
+        if (result.isEmpty()) {
             const tutorial = new Tutorial({
                 title: req.body.title,
                 description: req.body.description,
@@ -21,13 +27,13 @@ exports.create = async (req, res) => {
             res.send(data);
         }
         else {
-            res.send({ message: "Title already exists" })
+            res.send({message : result.errors[0].msg})
         }
     } catch (error) {
         console.log("Error ", error);
     }
-
 }
+
 
 
 exports.findAll = (req, res) => {
@@ -90,8 +96,8 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-console.log("id",id)
-  Tutorial.findByIdAndUpdatecheckDupliacteTitle()=(res,req)(id, { useFindAndModify: false })
+  console.log("id", id)
+  Tutorial.findByIdAndUpdatecheckDupliacteTitle() = (res, req)(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
