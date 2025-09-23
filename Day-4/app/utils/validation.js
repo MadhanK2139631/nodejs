@@ -5,7 +5,7 @@ const { body } = require('express-validator');
 const checkDuplicateTitles = async (title) => {
     const existingTutorial = await tutorials.findOne({ "title": { $regex: `^${title}$`, $options: 'i' }});
     if (existingTutorial) {
-        throw new Error('Title already exists.Please choose a differnt title//MongoDB to use a regular expression');
+        throw new Error('Title already exists.Please choose a differnt title.');
     }
     return true;
 }
