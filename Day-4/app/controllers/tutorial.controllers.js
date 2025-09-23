@@ -5,15 +5,6 @@ const {validationResult} = require("express-validator");
 
 exports.create = async (req, res) => {
   try {
-    // if (!req.body.title.trim()) {
-    //   res.status(400).send({ message: "Content cannot be empty" });
-    //   return;
-    // }
-    // if (!req.body.description.trim()) {
-    //   res.status(400).send({ message: "Content cannot be empty" });
-    //   return;
-    // }
-    // const isDuplicateTitle = await checkDuplicateTitlle(req.body.title);
         const result = validationResult(req);
 
         if (result.isEmpty()) {
