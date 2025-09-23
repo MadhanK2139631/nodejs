@@ -1,33 +1,33 @@
 const db = require("../models");
-const {checkDupliacteTitle}=require('../utils/validation');
+const {checkDuplicateTitlle}=require('../utils/validation');
 const Tutorial = db.tutorials;
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
+    try {
+        if (!req.body.title) {
+            res.status(400).send({ message: "Content cannot be empty" });
+            return;
+        }
+        const isDuplicateTitle = await ch(req.body.title);
 
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
+        if (!isDuplicateTitle?.length) {
+            const tutorial = new Tutorial({
+                title: req.body.title,
+                description: req.body.description,
+                published: req.body.published ? req.body.published : false
+            });
 
-const isDuplicate = checkDuplicateTitle(req.body.title)
-  const tutorial = new Tutorial({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
-  });
+            const data = await tutorial.save(tutorial)
+            res.send(data);
+        }
+        else {
+            res.send({ message: "Title already exists" })
+        }
+    } catch (error) {
+        console.log("Error ", error);
+    }
 
-
-  tutorial.save(tutorial)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial."
-      });
-    });
-};
+}
 
 
 exports.findAll = (req, res) => {

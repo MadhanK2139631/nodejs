@@ -1,13 +1,9 @@
 const db = require("../models");
-const Tutorials=db.tutorials;
 
+exports.checkDuplicateTitlle = (title) =>{
+    return db.tutorials.find({'title':title})
+}
 
-exports.checkDuplicateTitle=(title)=>{
-    console.log("Duplicate")
-
-    Tutorial.findOne({title:title}).exec((err,tutorials)=>{
-        if(err){
-            throw err;
-        }
-    })
+exports.checkDuplicateDiscription = (discription) =>{
+    return db.tutorials.find({'discription':discription})
 }
